@@ -2,6 +2,11 @@ import './App.css';
 import {useEffect} from "react";
 import {useTelegram} from "./hooks/useTelegram.js";
 import Header from "./components/header/Header.jsx";
+import {Route, Routes} from "react-router-dom";
+import Menu from "./components/menu/Menu.jsx";
+import Sale from "./components/sale/Sale.jsx";
+import Registration from "./components/registration/Registration.jsx";
+import Search from "./components/search/Search.jsx";
 
 
 function App() {
@@ -9,12 +14,17 @@ function App() {
 
     useEffect(() => {
         tg.ready();
-        },[])
+    }, [])
 
     return (
         <div className="App">
-           <Header />
-            <button onClick={onToggleButton}>toggle</button>
+            <Header/>
+            <Routes>
+                <Route index element={<Menu/>}/>
+                <Route path={'sale'} element={<Sale/>}/>
+                <Route path={'registration'} element={<Registration/>}/>
+                <Route path={'search'} element={<Search/>}/>
+            </Routes>
         </div>
     );
 }
