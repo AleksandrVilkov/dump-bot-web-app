@@ -35,7 +35,7 @@ const Search = () => {
             engine,
             description
         }
-        tg.sendData(JSON.stringify(data))
+        tg.sendData(JSON.stringify(data));
     }, [])
 
     useEffect(() => {
@@ -43,6 +43,12 @@ const Search = () => {
         return () => {
             tg.offEvent("SearchButtonClicked", onSendData)
         }
+    })
+
+    useEffect(() => {
+        tg.MainButton.setParams({
+            text: "Отправить"
+        })
     })
 
     //Валидация кнопки

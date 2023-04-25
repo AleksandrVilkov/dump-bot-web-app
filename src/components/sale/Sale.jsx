@@ -57,7 +57,7 @@ const Sale = () => {
             price,
             description
         }
-        tg.sendData(JSON.stringify(data))
+        tg.sendData(JSON.stringify(data));
     }, [])
 
     useEffect(() => {
