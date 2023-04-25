@@ -1,6 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import './Search.css';
 import {useTelegram} from "../../hooks/useTelegram.js";
+
 const Search = () => {
     const {tg} = useTelegram()
     const [concern, setConcern] = useState('')
@@ -26,6 +27,24 @@ const Search = () => {
         setDescription(e.target.value)
     }
 
+    const onSendData = useCallback(() => {
+        const data = {
+            concern,
+            brand,
+            model,
+            engine,
+            description
+        }
+        tg.sendData(JSON.stringify(data))
+    }, [])
+
+    useEffect(() => {
+        tg.WebApp.onEvent("SearchButtonClicked", onSendData)
+        return () => {
+            tg.WebApp.offEvent("SearchButtonClicked", onSendData)
+        }
+    })
+
     //Валидация кнопки
     useEffect(() => {
         if (!description) {
@@ -34,7 +53,7 @@ const Search = () => {
             tg.MainButton.show();
         }
 
-    },[description])
+    }, [description])
 
     return (
         <div className={"registration"}>
@@ -43,7 +62,8 @@ const Search = () => {
             <input className={'input'} type={"text"} onChange={onChangeBrand} placeholder={"Укажи выбери бренд:"}/>
             <input className={'input'} type={"text"} onChange={onChangeModel} placeholder={"Укажи выбери модель:"}/>
             <input className={'input'} type={"text"} onChange={onChangeEngine} placeholder={"Выбери мотор:"}/>
-            <input className={'input'} type={"text"} onChange={onChangeDescription} placeholder={"Напиши что именно ты ищешь:"}/>
+            <input className={'input'} type={"text"} onChange={onChangeDescription}
+                   placeholder={"Напиши что именно ты ищешь:"}/>
         </div>
     );
 };

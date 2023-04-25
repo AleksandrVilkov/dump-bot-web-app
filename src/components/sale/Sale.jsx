@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import './Sale.css';
 import {useTelegram} from "../../hooks/useTelegram.js";
 const Sale = () => {
@@ -46,6 +46,26 @@ const Sale = () => {
         }
 
     },[price, description])
+
+
+    const onSendData = useCallback(() => {
+        const data = {
+            concern,
+            brand,
+            model,
+            engine,
+            price,
+            description
+        }
+        tg.sendData(JSON.stringify(data))
+    }, [])
+
+    useEffect(() => {
+        tg.WebApp.onEvent("SaleButtonClicked", onSendData)
+        return () => {
+            tg.WebApp.offEvent("SaleButtonClicked", onSendData)
+        }
+    })
 
     return (
         <div className={"registration"}>
