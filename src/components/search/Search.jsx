@@ -39,9 +39,9 @@ const Search = () => {
     }, [])
 
     useEffect(() => {
-        tg.WebApp.onEvent("SearchButtonClicked", onSendData)
+        tg.onEvent("SearchButtonClicked", onSendData)
         return () => {
-            tg.WebApp.offEvent("SearchButtonClicked", onSendData)
+            tg.offEvent("SearchButtonClicked", onSendData)
         }
     })
 

@@ -61,9 +61,9 @@ const Sale = () => {
     }, [])
 
     useEffect(() => {
-        tg.WebApp.onEvent("SaleButtonClicked", onSendData)
+        tg.onEvent("SaleButtonClicked", onSendData)
         return () => {
-            tg.WebApp.offEvent("SaleButtonClicked", onSendData)
+            tg.offEvent("SaleButtonClicked", onSendData)
         }
     })
 
