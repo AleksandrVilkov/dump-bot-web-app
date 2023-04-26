@@ -36,7 +36,7 @@ const Search = () => {
             description
         }
         tg.sendData(JSON.stringify(data));
-    }, [])
+    }, [concern, brand, model, engine, description])
 
     useEffect(() => {
         tg.onEvent("SearchButtonClicked", onSendData)

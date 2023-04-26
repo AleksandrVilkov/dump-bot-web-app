@@ -2,13 +2,25 @@ import React, {useCallback, useEffect, useState} from 'react';
 import './Sale.css';
 import {useTelegram} from "../../hooks/useTelegram.js";
 const Sale = () => {
-    const {tg} = useTelegram()
     const [concern, setConcern] = useState('')
     const [brand, setBrand] = useState('')
     const [model, setModel] = useState('')
     const [engine, setEngine] = useState('')
     const [price, setPrice] = useState('')
     const [description, setDescription] = useState('')
+    const {tg} = useTelegram()
+
+    const onSendData = useCallback(() => {
+        const data = {
+            concern,
+            brand,
+            model,
+            engine,
+            price,
+            description
+        }
+        tg.sendData(JSON.stringify(data));
+    }, [concern, brand, model, engine, price, description])
 
 
     const onChangeConcern = (e) => {
@@ -48,17 +60,6 @@ const Sale = () => {
     },[price, description])
 
 
-    const onSendData = useCallback(() => {
-        const data = {
-            concern,
-            brand,
-            model,
-            engine,
-            price,
-            description
-        }
-        tg.sendData(JSON.stringify(data));
-    }, [])
 
     useEffect(() => {
         tg.onEvent("SaleButtonClicked", onSendData)
