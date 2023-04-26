@@ -1,13 +1,14 @@
 import React from 'react';
 import {useTelegram} from "../../hooks/useTelegram.js";
 import './Header.css';
+
 const Header = () => {
-    const {user, onClose} = useTelegram();
+    const {tg, user, onClose} = useTelegram();
 
     return (
         <div className={'header'}>
             <span className={'username'}>
-                {"Привет," + user?.username + "!"}
+                {"Привет," + tg.initDataUnsafe.user.first_name + " " + tg.initDataUnsafe.user.last_name + "!"}
             </span>
         </div>
     );
