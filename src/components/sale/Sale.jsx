@@ -10,9 +10,11 @@ const Sale = () => {
     const [price, setPrice] = useState('')
     const [description, setDescription] = useState('')
     const {tg} = useTelegram()
+    const userId = tg?.initDataUnsafe?.user?.id;
 
     const onSendData = useCallback(() => {
         const data = {
+            userId,
             concern,
             brand,
             model,
@@ -21,7 +23,7 @@ const Sale = () => {
             description
         }
         tg.sendData(JSON.stringify(data));
-    }, [concern, brand, model, engine, price, description])
+    }, [userId, concern, brand, model, engine, price, description])
 
     useEffect(() => {
         tg.onEvent("mainButtonClicked", onSendData)
@@ -40,9 +42,9 @@ const Sale = () => {
     //Валидация кнопки
     useEffect(() => {
         if (!price || !description) {
-            tg.MainButton.hide();
+            tg.MainButton.disable();
         } else {
-            tg.MainButton.show();
+            tg.MainButton.enable();
         }
 
     }, [price, description])
