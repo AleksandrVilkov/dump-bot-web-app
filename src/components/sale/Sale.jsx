@@ -42,9 +42,9 @@ const Sale = () => {
     //Валидация кнопки
     useEffect(() => {
         if (!price || !description) {
-            tg.MainButton.disable();
+            tg.MainButton.hide();
         } else {
-            tg.MainButton.enable();
+            tg.MainButton.show();
         }
 
     }, [price, description])
