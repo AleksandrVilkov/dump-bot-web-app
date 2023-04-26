@@ -42,9 +42,9 @@ const Registration = () => {
     }, [])
 
     useEffect(() => {
-        tg.onEvent("RegistrationButtonClicked", onSendData)
+        tg.onEvent("mainButtonClicked", onSendData)
         return () => {
-            tg.offEvent("RegistrationButtonClicked", onSendData)
+            tg.offEvent("mainButtonClicked", onSendData)
         }
     }, [onSendData])
 

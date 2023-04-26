@@ -39,9 +39,9 @@ const Search = () => {
     }, [concern, brand, model, engine, description])
 
     useEffect(() => {
-        tg.onEvent("SearchButtonClicked", onSendData)
+        tg.onEvent("mainButtonClicked", onSendData)
         return () => {
-            tg.offEvent("SearchButtonClicked", onSendData)
+            tg.offEvent("mainButtonClicked", onSendData)
         }
     },[onSendData])
 
