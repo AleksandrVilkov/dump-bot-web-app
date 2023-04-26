@@ -9,21 +9,21 @@ const Sale = () => {
     const [engine, setEngine] = useState('')
     const [price, setPrice] = useState('')
     const [description, setDescription] = useState('')
+    const [action, setAction] = useState('')
     const {tg} = useTelegram()
-    const userId = tg?.initDataUnsafe?.user?.id;
 
     const onSendData = useCallback(() => {
         const data = {
-            userId,
             concern,
             brand,
             model,
             engine,
             price,
-            description
+            description,
+            action
         }
         tg.sendData(JSON.stringify(data));
-    }, [userId, concern, brand, model, engine, price, description])
+    }, [concern, brand, model, engine, price, description, action])
 
     useEffect(() => {
         tg.onEvent("mainButtonClicked", onSendData)
@@ -64,9 +64,11 @@ const Sale = () => {
     }
     const onChangePrice = (e) => {
         setPrice(e.target.value)
+        setAction("SALE")
     }
     const onChangeDescription = (e) => {
         setDescription(e.target.value)
+
     }
 
 
