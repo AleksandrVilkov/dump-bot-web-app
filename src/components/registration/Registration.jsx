@@ -50,6 +50,15 @@ const Registration = () => {
         }
     }, [onSendData])
 
+    useEffect(() => {
+        if (!concern || !brand || !model || !engine || !boltPatten || !city ) {
+            tg.MainButton.hide();
+        } else {
+            tg.MainButton.show();
+        }
+
+    }, [concern, brand, model, engine, boltPatten, city])
+
     return (
         <div className={"registration"}>
             <h3>Ты находишься на страничке регистрации</h3>
