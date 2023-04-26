@@ -8,7 +8,7 @@ const Registration = () => {
     const [brand, setBrand] = useState('')
     const [model, setModel] = useState('')
     const [engine, setEngine] = useState('')
-    const [boltPatten, setBoltPatten] = useState('')
+    const [boltPattern, setBoltPattern] = useState('')
     const [city, setCity] = useState('')
     const [action, setAction] = useState('')
     const onChangeConcern = (e) => {
@@ -24,7 +24,7 @@ const Registration = () => {
         setEngine(e.target.value)
     }
     const onChangeBoltPattern = (e) => {
-        setBoltPatten(e.target.value)
+        setBoltPattern(e.target.value)
     }
     const onChangeCity = (e) => {
         setCity(e.target.value)
@@ -36,12 +36,12 @@ const Registration = () => {
             brand,
             model,
             engine,
-            boltPatten,
+            boltPattern,
             city,
             action
         }
         tg.sendData(JSON.stringify(data))
-    }, [concern, brand, model, engine, boltPatten, city, action])
+    }, [concern, brand, model, engine, boltPattern, city, action])
 
     useEffect(() => {
         tg.onEvent("mainButtonClicked", onSendData)
@@ -51,13 +51,13 @@ const Registration = () => {
     }, [onSendData])
 
     useEffect(() => {
-        if (!concern || !brand || !model || !engine || !boltPatten || !city ) {
+        if (!concern || !brand || !model || !engine || !boltPattern || !city ) {
             tg.MainButton.hide();
         } else {
             tg.MainButton.show();
         }
 
-    }, [concern, brand, model, engine, boltPatten, city])
+    }, [concern, brand, model, engine, boltPattern, city])
 
     return (
         <div className={"registration"}>
