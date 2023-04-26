@@ -24,9 +24,9 @@ const Sale = () => {
     }, [concern, brand, model, engine, price, description])
 
     useEffect(() => {
-        tg.onEvent("SaleButtonClicked", onSendData)
+        tg.onEvent("mainButtonClicked", onSendData)
         return () => {
-            tg.offEvent("SaleButtonClicked", onSendData)
+            tg.offEvent("mainButtonClicked", onSendData)
         }
     }, [onSendData])
 
