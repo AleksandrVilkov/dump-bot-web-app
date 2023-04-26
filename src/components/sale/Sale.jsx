@@ -20,13 +20,7 @@ const Sale = () => {
             price,
             description
         }
-        fetch('http://localhost:8080/car/concerns', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data)
-        })
+        tg.sendData(JSON.stringify(data));
     }, [concern, brand, model, engine, price, description])
 
     useEffect(() => {
