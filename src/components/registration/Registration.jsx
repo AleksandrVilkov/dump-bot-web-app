@@ -46,7 +46,7 @@ const Registration = () => {
         return () => {
             tg.offEvent("RegistrationButtonClicked", onSendData)
         }
-    })
+    }, [onSendData])
 
     return (
         <div className={"registration"}>

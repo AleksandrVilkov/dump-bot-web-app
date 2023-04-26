@@ -43,7 +43,7 @@ const Search = () => {
         return () => {
             tg.offEvent("SearchButtonClicked", onSendData)
         }
-    })
+    },[onSendData])
 
     useEffect(() => {
         tg.MainButton.setParams({
