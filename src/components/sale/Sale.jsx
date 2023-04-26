@@ -20,7 +20,6 @@ const Sale = () => {
             price,
             description
         }
-        tg.sendData(JSON.stringify(data));
         fetch('http://localhost:8080/car/concerns', {
             method: 'POST',
             headers: {
