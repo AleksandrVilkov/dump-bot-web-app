@@ -12,6 +12,11 @@ const Sale = () => {
     const [action, setAction] = useState('')
     const {tg} = useTelegram()
 
+
+    const concernsData = ["PSA"]
+    const brandData = ["PEUGEOT", "CITROEN"]
+    const modelData = ["C4"]
+
     const onSendData = useCallback(() => {
         const data = {
             concern,
@@ -52,6 +57,16 @@ const Sale = () => {
 
     const onChangeConcern = (e) => {
         setConcern(e.target.value)
+        fetch('http://localhost:8080/car/concerns', {
+            method: 'POST',
+            //mode: 'no-cors',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept-Encoding' : 'gzip, deflate, br',
+                'Connection' : 'keep-alive'
+             },
+            body: JSON.stringify(concern)
+        })
     }
     const onChangeBrand = (e) => {
         setBrand(e.target.value)
@@ -75,11 +90,34 @@ const Sale = () => {
     return (
         <div className={"registration"}>
             <h3>Ты находишься на страничке создания объявления</h3>
-            <input className={'input'} type={"text"} onChange={onChangeConcern} placeholder={"Укажи концерн:"}/>
-            <input className={'input'} type={"text"} onChange={onChangeBrand} placeholder={"Укажи выбери бренд:"}/>
-            <input className={'input'} type={"text"} onChange={onChangeModel} placeholder={"Укажи выбери модель:"}/>
-            <input className={'input'} type={"text"} onChange={onChangeEngine} placeholder={"Выбери мотор:"}/>
+
+            <input type="text" list="concerns" onChange={onChangeConcern} placeholder={"Укажи концерн:"}/>
+            <datalist id="concerns">
+                {concernsData.map((item, key) =>
+                    <option key={key} value={item} onChange={onChangeConcern}/>
+                )}
+            </datalist>
+
+
+            <input className={'input'} list="brands" type={"text"} onChange={onChangeBrand}
+                   placeholder={"Укажи выбери бренд:"}/>
+            <datalist id="brands">
+                {brandData.map((item, key) =>
+                    <option key={key} value={item} onChange={onChangeConcern}/>
+                )}
+            </datalist>
+
+            <input className={'input'} list="models" type={"text"} onChange={onChangeModel}
+                   placeholder={"Укажи выбери модель:"}/>
+            <datalist id="models">
+                {modelData.map((item, key) =>
+                    <option key={key} value={item} onChange={onChangeConcern}/>
+                )}
+            </datalist>
+
             <input className={'input'} type={"text"} onChange={onChangePrice} placeholder={"Укажи цену:"}/>
+
+
             <input className={'input'} type={"text"} onChange={onChangeDescription} placeholder={"Напиши описание"}/>
         </div>
     );
