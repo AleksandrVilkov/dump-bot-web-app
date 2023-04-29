@@ -133,7 +133,7 @@ const Sale = () => {
             <input className={'input'} list="models" type={"text"} onChange={onChangeModel}
                    placeholder={"Укажи выбери модель:"}/>
             <datalist id="models">
-                {modelData.map((item, key) =>
+                {modelData?.map((item, key) =>
                     <option key={key} value={item} onChange={onChangeConcern}/>
                 )}
             </datalist>
