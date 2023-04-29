@@ -9,7 +9,6 @@ const Sale = () => {
     const [engine, setEngine] = useState('')
     const [price, setPrice] = useState('')
     const [description, setDescription] = useState('')
-    const [action, setAction] = useState('')
     const {tg} = useTelegram()
 
 
@@ -25,10 +24,10 @@ const Sale = () => {
             engine,
             price,
             description,
-            action
+            action : "SALE"
         }
         tg.sendData(JSON.stringify(data));
-    }, [concern, brand, model, engine, price, description, action])
+    }, [concern, brand, model, engine, price, description])
 
     useEffect(() => {
         tg.onEvent("mainButtonClicked", onSendData)
@@ -79,7 +78,6 @@ const Sale = () => {
     }
     const onChangePrice = (e) => {
         setPrice(e.target.value)
-        setAction("SALE")
     }
     const onChangeDescription = (e) => {
         setDescription(e.target.value)
@@ -116,8 +114,6 @@ const Sale = () => {
             </datalist>
 
             <input className={'input'} type={"text"} onChange={onChangePrice} placeholder={"Укажи цену:"}/>
-
-
             <input className={'input'} type={"text"} onChange={onChangeDescription} placeholder={"Напиши описание"}/>
         </div>
     );

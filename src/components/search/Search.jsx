@@ -9,7 +9,6 @@ const Search = () => {
     const [model, setModel] = useState('')
     const [engine, setEngine] = useState('')
     const [description, setDescription] = useState('')
-    const [action, setAction] = useState('')
 
     const onChangeConcern = (e) => {
         setConcern(e.target.value)
@@ -25,7 +24,6 @@ const Search = () => {
     }
     const onChangeDescription = (e) => {
         setDescription(e.target.value)
-        setAction("SEARCH")
     }
 
     const onSendData = useCallback(() => {
@@ -35,10 +33,10 @@ const Search = () => {
             model,
             engine,
             description,
-            action
+            action: "SEARCH"
         }
         tg.sendData(JSON.stringify(data));
-    }, [concern, brand, model, engine, description, action])
+    }, [concern, brand, model, engine, description])
 
     useEffect(() => {
         tg.onEvent("mainButtonClicked", onSendData)

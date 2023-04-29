@@ -10,7 +10,6 @@ const Registration = () => {
     const [engine, setEngine] = useState('')
     const [boltPattern, setBoltPattern] = useState('')
     const [city, setCity] = useState('')
-    const [action, setAction] = useState('')
     const onChangeConcern = (e) => {
         setConcern(e.target.value)
     }
@@ -28,7 +27,6 @@ const Registration = () => {
     }
     const onChangeCity = (e) => {
         setCity(e.target.value)
-        setAction("REGISTRATION")
     }
     const onSendData = useCallback(() => {
         const data = {
@@ -38,10 +36,10 @@ const Registration = () => {
             engine,
             boltPattern,
             city,
-            action
+            action : "REGISTRATION"
         }
         tg.sendData(JSON.stringify(data))
-    }, [concern, brand, model, engine, boltPattern, city, action])
+    }, [concern, brand, model, engine, boltPattern, city])
 
     useEffect(() => {
         tg.onEvent("mainButtonClicked", onSendData)
