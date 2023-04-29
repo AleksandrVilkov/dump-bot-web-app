@@ -11,10 +11,9 @@ const Sale = () => {
     const [description, setDescription] = useState('')
     const {tg} = useTelegram()
 
-
-    const concernsData = ["PSA"]
-    const brandData = ["PEUGEOT", "CITROEN"]
-    const modelData = ["C4"]
+    const [concernsData, setConcernsData] = useState()
+    const [brandData, setBrandData] = useState()
+    const [modelData, setModelData] = useState()
 
     const onSendData = useCallback(() => {
         const data = {
@@ -24,7 +23,7 @@ const Sale = () => {
             engine,
             price,
             description,
-            action : "SALE"
+            action: "SALE"
         }
         tg.sendData(JSON.stringify(data));
     }, [concern, brand, model, engine, price, description])
@@ -53,7 +52,6 @@ const Sale = () => {
 
     }, [price, description])
 
-
     const onChangeConcern = (e) => {
         setConcern(e.target.value)
         fetch('http://localhost:8080/car/concerns', {
@@ -61,14 +59,41 @@ const Sale = () => {
             //mode: 'no-cors',
             headers: {
                 'Content-Type': 'application/json',
-                'Accept-Encoding' : 'gzip, deflate, br',
-                'Connection' : 'keep-alive'
-             },
-            body: JSON.stringify(concern)
-        })
+                'Accept': 'application/json',
+                'Origin': 'http://localhost:3000',
+            },
+            body: "{\"pattern\":\"" + e.target.value + "\"}"
+        }).then((response) => {
+            return response.json();
+        }).then((data) => {
+            if (data.response) {
+                console.log(data.response);
+                setConcernsData(data.response)
+            }
+        });
     }
+
     const onChangeBrand = (e) => {
         setBrand(e.target.value)
+        fetch('http://localhost:8080/car/brands', {
+            method: 'POST',
+            //mode: 'no-cors',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Origin': 'http://localhost:3000',
+            },
+            body: "{\"concern\" : \"" + concern + "\"," +
+                "\"pattern\":\"" + e.target.value + "\"}"
+        }).then((response) => {
+            return response.json();
+        }).then((data) => {
+            if (data.response) {
+                console.log(data.response);
+                setBrandData(data.response)
+            }
+        });
+
     }
     const onChangeModel = (e) => {
         setModel(e.target.value)
@@ -91,16 +116,16 @@ const Sale = () => {
 
             <input type="text" list="concerns" onChange={onChangeConcern} placeholder={"Укажи концерн:"}/>
             <datalist id="concerns">
-                {concernsData.map((item, key) =>
-                    <option key={key} value={item} onChange={onChangeConcern}/>
-                )}
+                {
+                    concernsData?.map((item, key) =>
+                        <option key={key} value={item} onChange={onChangeConcern}/>
+                    )}
             </datalist>
-
 
             <input className={'input'} list="brands" type={"text"} onChange={onChangeBrand}
                    placeholder={"Укажи выбери бренд:"}/>
             <datalist id="brands">
-                {brandData.map((item, key) =>
+                {brandData?.map((item, key) =>
                     <option key={key} value={item} onChange={onChangeConcern}/>
                 )}
             </datalist>
