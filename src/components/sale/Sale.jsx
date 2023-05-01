@@ -1,145 +1,142 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import './Sale.css';
 import {useTelegram} from "../../hooks/useTelegram.js";
+import ConcernItem from "../items/concernItem/СoncernItem.jsx";
+import BrandItem from "../items/brandItem/BrandItem.jsx";
+import ModelItem from "../items/modelItem/ModelItem.jsx";
 
 const Sale = () => {
+    const [data, setData] = useState('')
+
+    const fetchData = () => {
+        fetch('http://localhost:8080/car/allCars', {
+            method: 'GET',
+            //mode: 'no-cors',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Origin': 'http://localhost:3000',
+            },
+        }).then((response) => {
+            return response.json();
+        }).then((data) => {
+            console.log(data.response)
+            setData(data.response)
+        });
+    }
+
+    useEffect(() => {
+        fetchData();
+    }, [])
+
+
+    // const concernData = [
+    //     "PSA"
+    // ]
+    // const brandData = [
+    //     "PEUGEOT", "CITROEN"
+    // ]
+    //
+    // const modelData = [
+    //     "C4", "307"
+    // ]
+    //
+    // const [concern, setConcern] = useState('')
+
+
+    //
+    // const [price, setPrice] = useState('')
+    // const [description, setDescription] = useState('')
+    // const {tg} = useTelegram()
+    //
+    //
+    //
+    // const onSendData = useCallback(() => {
+    //     const data = {
+    //         concern,
+    //         brand,
+    //         model,
+    //         price,
+    //         description,
+    //         action: "SALE"
+    //     }
+    //     tg.sendData(JSON.stringify(data));
+    // }, [concern, brand, model, engine, price, description])
+    //
+    // useEffect(() => {
+    //     tg.onEvent("mainButtonClicked", onSendData)
+    //     return () => {
+    //         tg.offEvent("mainButtonClicked", onSendData)
+    //     }
+    // }, [onSendData])
+    //
+    // useEffect(() => {
+    //     tg.MainButton.setParams({
+    //         text: "Продать"
+    //     })
+    // }, [])
+    //
+    // //Валидация кнопки
+    // useEffect(() => {
+    //     if (!price || !description) {
+    //         tg.MainButton.hide();
+    //     } else {
+    //         tg.MainButton.show();
+    //     }
+    //
+    // }, [price, description])
+    //
+    const onChangeConcern = (e) => {
+        console.log(e.target.value)
+        console.log("11111111111")
+    }
+    let updateData;
+    updateData = (value) => {
+        this.setState({name: value})
+    }
+    //
+    // const onChangeBrand = (e) => {
+    //     setBrand(e.target.value)
+    // }
+    // const onChangeModel = (e) => {
+    //     setModel(e.target.value)
+    // }
+    // const onChangeEngine = (e) => {
+    //     setEngine(e.target.value)
+    // }
+    // const onChangePrice = (e) => {
+    //     setPrice(e.target.value)
+    // }
+    // const onChangeDescription = (e) => {
+    //     setDescription(e.target.value)
+    // }
+
     const [concern, setConcern] = useState('')
     const [brand, setBrand] = useState('')
     const [model, setModel] = useState('')
-    const [engine, setEngine] = useState('')
-    const [price, setPrice] = useState('')
-    const [description, setDescription] = useState('')
-    const {tg} = useTelegram()
-
-    const [concernsData, setConcernsData] = useState()
-    const [brandData, setBrandData] = useState()
-    const [modelData, setModelData] = useState()
-
-    const onSendData = useCallback(() => {
-        const data = {
-            concern,
-            brand,
-            model,
-            engine,
-            price,
-            description,
-            action: "SALE"
-        }
-        tg.sendData(JSON.stringify(data));
-    }, [concern, brand, model, engine, price, description])
-
-    useEffect(() => {
-        tg.onEvent("mainButtonClicked", onSendData)
-        return () => {
-            tg.offEvent("mainButtonClicked", onSendData)
-        }
-    }, [onSendData])
-
-
-    useEffect(() => {
-        tg.MainButton.setParams({
-            text: "Продать"
-        })
-    }, [])
-
-    //Валидация кнопки
-    useEffect(() => {
-        if (!price || !description) {
-            tg.MainButton.hide();
-        } else {
-            tg.MainButton.show();
-        }
-
-    }, [price, description])
-
-    const onChangeConcern = (e) => {
-        setConcern(e.target.value)
-        fetch('http://localhost:8080/car/concerns', {
-            method: 'POST',
-            //mode: 'no-cors',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'Origin': 'http://localhost:3000',
-            },
-            body: "{\"pattern\":\"" + e.target.value + "\"}"
-        }).then((response) => {
-            return response.json();
-        }).then((data) => {
-            if (data.response) {
-                console.log(data.response);
-                setConcernsData(data.response)
-            }
-        });
+    const handleConcern = (concern) => {
+        console.log(concern)
+        setConcern(concern)
+    }
+    const handleBrand = (e) => {
+        console.log("handleBrand")
+        console.log(e)
+        setBrand(e)
     }
 
-    const onChangeBrand = (e) => {
-        setBrand(e.target.value)
-        fetch('http://localhost:8080/car/brands', {
-            method: 'POST',
-            //mode: 'no-cors',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'Origin': 'http://localhost:3000',
-            },
-            body: "{\"concern\" : \"" + concern + "\"," +
-                "\"pattern\":\"" + e.target.value + "\"}"
-        }).then((response) => {
-            return response.json();
-        }).then((data) => {
-            if (data.response) {
-                console.log(data.response);
-                setBrandData(data.response)
-            }
-        });
-
+    const handleModel = (e) => {
+        console.log("handleModel")
+        console.log(e)
+        setModel(e)
     }
-    const onChangeModel = (e) => {
-        setModel(e.target.value)
-    }
-    const onChangeEngine = (e) => {
-        setEngine(e.target.value)
-    }
-    const onChangePrice = (e) => {
-        setPrice(e.target.value)
-    }
-    const onChangeDescription = (e) => {
-        setDescription(e.target.value)
-
-    }
-
 
     return (
-        <div className={"registration"}>
+        <div className={"sale"}>
             <h3>Ты находишься на страничке создания объявления</h3>
-
-            <input type="text" list="concerns" onChange={onChangeConcern} placeholder={"Укажи концерн:"}/>
-            <datalist id="concerns">
-                {
-                    concernsData?.map((item, key) =>
-                        <option key={key} value={item} onChange={onChangeConcern}/>
-                    )}
-            </datalist>
-
-            <input className={'input'} list="brands" type={"text"} onChange={onChangeBrand}
-                   placeholder={"Укажи выбери бренд:"}/>
-            <datalist id="brands">
-                {brandData?.map((item, key) =>
-                    <option key={key} value={item} onChange={onChangeConcern}/>
-                )}
-            </datalist>
-
-            <input className={'input'} list="models" type={"text"} onChange={onChangeModel}
-                   placeholder={"Укажи выбери модель:"}/>
-            <datalist id="models">
-                {modelData?.map((item, key) =>
-                    <option key={key} value={item} onChange={onChangeConcern}/>
-                )}
-            </datalist>
-
-            <input className={'input'} type={"text"} onChange={onChangePrice} placeholder={"Укажи цену:"}/>
-            <input className={'input'} type={"text"} onChange={onChangeDescription} placeholder={"Напиши описание"}/>
+            <h3>Ты выбрал следующие данные: {concern} {brand} {model}</h3>
+            <ConcernItem data={data} onChange={handleConcern}/>
+            <BrandItem concern={concern} data={data} onChange={handleBrand}/>
+            <ModelItem concern={concern} data={data} brand={brand} onChange={handleModel}/>
         </div>
     );
 };
