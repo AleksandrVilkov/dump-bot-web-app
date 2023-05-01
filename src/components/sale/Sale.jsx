@@ -4,6 +4,7 @@ import {useTelegram} from "../../hooks/useTelegram.js";
 import ConcernItem from "../items/concernItem/СoncernItem.jsx";
 import BrandItem from "../items/brandItem/BrandItem.jsx";
 import ModelItem from "../items/modelItem/ModelItem.jsx";
+import CarItem from "../items/carItem/CarItem.jsx";
 
 const Sale = () => {
     const [data, setData] = useState('')
@@ -20,7 +21,6 @@ const Sale = () => {
         }).then((response) => {
             return response.json();
         }).then((data) => {
-            console.log(data.response)
             setData(data.response)
         });
     }
@@ -86,50 +86,31 @@ const Sale = () => {
     //
     // }, [price, description])
     //
-    const onChangeConcern = (e) => {
-        console.log(e.target.value)
-        console.log("11111111111")
-    }
     let updateData;
     updateData = (value) => {
         this.setState({name: value})
     }
-    //
-    // const onChangeBrand = (e) => {
-    //     setBrand(e.target.value)
-    // }
-    // const onChangeModel = (e) => {
-    //     setModel(e.target.value)
-    // }
-    // const onChangeEngine = (e) => {
-    //     setEngine(e.target.value)
-    // }
-    // const onChangePrice = (e) => {
-    //     setPrice(e.target.value)
-    // }
-    // const onChangeDescription = (e) => {
-    //     setDescription(e.target.value)
-    // }
 
     const [concern, setConcern] = useState('')
     const [brand, setBrand] = useState('')
     const [model, setModel] = useState('')
+    const [car, setCar] = useState('')
     const handleConcern = (concern) => {
-        console.log(concern)
         setConcern(concern)
+        setBrand(null)
+        setModel(null)
     }
     const handleBrand = (e) => {
-        console.log("handleBrand")
-        console.log(e)
         setBrand(e)
+        setModel(null)
     }
 
     const handleModel = (e) => {
-        console.log("handleModel")
-        console.log(e)
         setModel(e)
     }
-
+    const handleCar = (e) => {
+        setCar(e)
+    }
     return (
         <div className={"sale"}>
             <h3>Ты находишься на страничке создания объявления</h3>
@@ -137,6 +118,7 @@ const Sale = () => {
             <ConcernItem data={data} onChange={handleConcern}/>
             <BrandItem concern={concern} data={data} onChange={handleBrand}/>
             <ModelItem concern={concern} data={data} brand={brand} onChange={handleModel}/>
+            <CarItem concern={concern} data={data} brand={brand} model={model} onChange={handleCar}/>
         </div>
     );
 };

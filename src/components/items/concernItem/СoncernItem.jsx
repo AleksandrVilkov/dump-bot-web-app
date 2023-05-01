@@ -8,9 +8,9 @@ const ConcernItem = (props) => {
         return <option key={text} value={text}>{text}</option>;
     });
 
-    const handleChange = (event) => {
-        setValue(event.target.value)
-        props.onChange(event.target.value) // callback-функция
+    const handleChange = (value) => {
+        setValue(value)
+        props.onChange(value) // callback-функция
     }
 
     useEffect(() => {
@@ -18,13 +18,16 @@ const ConcernItem = (props) => {
         if (props.data) {
             props.data?.forEach(v => concerns.add(v.concern.name));
             setConcernsArr(Array.from(concerns));
+            if (!value) {
+                handleChange(concernsArr[0])
+            }
         }
-    }, [props.data])
+    }, [props])
 
     return (
         <div className={"concernItem"}>
             <h3>Выбери концерн:</h3>
-            <select value={value} onChange={(event) => handleChange(event)}>
+            <select value={value} onChange={(event) => handleChange(event.target.value)}>
                 {options}
             </select>
         </div>)

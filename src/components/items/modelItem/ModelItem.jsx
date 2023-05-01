@@ -17,24 +17,20 @@ const ModelItem = (props) => {
             })
         }
         setModelArr(Array.from(model))
-
-        console.log(model.size)
-        if (model.size === 1) {
-            setValue(model[0])
-            props.onChange(model[0])
+        if (!value) {
+            handleChange(modelArr[0])
         }
-
     }, [props]);
 
-    const handleChange = (event) => {
-        setValue(event.target.value)
-        props.onChange(event.target.value) // callback-функция
+    const handleChange = (value) => {
+        setValue(value)
+        props.onChange(value) // callback-функция
     }
 
     return (
         <div className={"modelItem"}>
             <h3>Выбери модель:</h3>
-            <select value={value} onChange={event => handleChange(event)}>
+            <select value={value} onChange={event => handleChange(event.target.value)}>
                 {options}
             </select>
         </div>

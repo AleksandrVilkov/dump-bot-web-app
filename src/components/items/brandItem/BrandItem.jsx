@@ -19,16 +19,19 @@ const BrandItem = (props) => {
             })
         }
         setBrandsArr(Array.from(brands))
+        if (!value) {
+            handleChange(brandsArr[0])
+        }
     }, [props])
-    const handleChange = (event) => {
-        setValue(event.target.value)
-        props.onChange(event.target.value) // callback-функция
+    const handleChange = (value) => {
+        setValue(value)
+        props.onChange(value) // callback-функция
     }
 
     return (
         <div className={"brandItem"}>
             <h3>Выбери бренд:</h3>
-            <select value={value} onChange={event => handleChange(event)}>
+            <select value={value} onChange={event => handleChange(event.target.value)}>
                 {options}
             </select>
         </div>
