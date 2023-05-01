@@ -11,7 +11,7 @@ const Select = (props) => {
     const [value, setValue] = useState();
     const [values, setValues] = useState([]);
 
-    const options = values.map((text, index) => {
+    const options = values?.map((text, index) => {
         return <option key={text} value={text}>{text}</option>;
     });
 
