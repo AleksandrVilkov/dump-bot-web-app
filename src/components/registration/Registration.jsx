@@ -18,7 +18,7 @@ const Registration = () => {
     const [countriesArr, setCountriesArr] = useState([]);
 
     const fetchData = () => {
-        fetch('http://85.193.82.129/car/allCars', {
+        fetch('https://85.193.82.129/car/allCars', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
