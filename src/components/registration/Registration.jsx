@@ -18,7 +18,7 @@ const Registration = () => {
     const [countriesArr, setCountriesArr] = useState([]);
 
     const fetchData = () => {
-        fetch('http://localhost:8080/car/allCars', {
+        fetch('http://85.193.82.129/car/allCars', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -30,7 +30,7 @@ const Registration = () => {
         }).then((data) => {
             setData(data.response)
         });
-        fetch('http://localhost:8080/place/countries', {
+        fetch('http://85.193.82.129/place/countries', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
