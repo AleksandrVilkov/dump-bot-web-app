@@ -19,12 +19,11 @@ const Sale = () => {
     const [enginesArr, setEnginesArr] = useState([]);
 
     const fetchData = () => {
-        fetch('http://85.193.82.129/car/allCars', {
+        fetch('http://85.193.82.129:8080/car/allCars', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
-                'Origin': 'http://localhost:3000',
             },
         }).then((response) => {
             return response.json();
