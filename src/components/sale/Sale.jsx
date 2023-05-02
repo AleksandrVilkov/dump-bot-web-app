@@ -42,7 +42,7 @@ const Sale = () => {
             const concerns = new Set();
             data.forEach(v => concerns.add(v.concern.name));
             setConcernsArr(Array.from(concerns));
-            if (!concern) {
+            if (concerns.size === 1) {
                 setConcern(concernsArr[0])
             }
         }
@@ -110,7 +110,7 @@ const Sale = () => {
         setPrice(e.target.value)
     }
     const handleDescription = (e) => {
-        setPrice(e.target.value)
+        setDescription(e.target.value)
     }
 
     const {tg} = useTelegram()
