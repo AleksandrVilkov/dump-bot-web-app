@@ -19,7 +19,7 @@ const Sale = () => {
     const [enginesArr, setEnginesArr] = useState([]);
 
     const fetchData = () => {
-        fetch('https://localhost:8080/car/allCars', {
+        fetch('http://localhost:8080/car/allCars', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
