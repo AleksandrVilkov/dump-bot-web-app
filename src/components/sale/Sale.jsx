@@ -2,6 +2,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import './Sale.css';
 import {useTelegram} from "../../hooks/useTelegram.js";
 import Car from "../car/Car.jsx";
+import Description from "../description/Description.jsx";
 
 const Sale = () => {
     const [concern, setConcern] = useState('')
@@ -28,12 +29,6 @@ const Sale = () => {
         setEngine(e)
     }
 
-    const handlePrice = (e) => {
-        setPrice(e.target.value)
-    }
-    const handleDescription = (e) => {
-        setDescription(e.target.value)
-    }
 
     const {tg} = useTelegram()
 
@@ -82,23 +77,8 @@ const Sale = () => {
                 handleBrand= {handleBrand}
                 handleModel = {handleModel}
                 handleEngine = {handleEngine}</Car>
+            <Description></Description>
 
-            <h3>Укажи цену:</h3>
-            <input
-                className={'input'}
-                type={"text"}
-                placeholder={"Укажи цену"}
-                value={price}
-                onChange={handlePrice}
-            />
-
-            <input
-                className={'input'}
-                type={"text"}
-                placeholder={"Добавь описание:"}
-                value={description}
-                onChange={handleDescription}
-            />
         </div>
     );
 };
