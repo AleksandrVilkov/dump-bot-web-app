@@ -20,7 +20,7 @@ const Registration = () => {
     const [countriesArr, setCountriesArr] = useState([]);
     const [citiesArr, setCitiesArr] = useState([]);
     const fetchData = () => {
-        fetch('http://dumpdot.ru/car/allCars', {
+        fetch('https://dumpdot.ru/car/allCars', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -32,7 +32,7 @@ const Registration = () => {
             setCarData(data.response)
         });
 
-        fetch('http://dumpdot.ru/place/cities', {
+        fetch('https://dumpdot.ru/place/cities', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

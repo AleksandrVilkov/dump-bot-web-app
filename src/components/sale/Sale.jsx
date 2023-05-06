@@ -19,7 +19,7 @@ const Sale = () => {
     const [enginesArr, setEnginesArr] = useState([]);
 
     const fetchData = () => {
-        fetch('http://dumpdot.ru/car/allCars', {
+        fetch('https://dumpdot.ru/car/allCars', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
