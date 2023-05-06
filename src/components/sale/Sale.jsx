@@ -1,11 +1,9 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import './Sale.css';
-import Select from "../select/select.jsx";
 import {useTelegram} from "../../hooks/useTelegram.js";
+import Car from "../car/Car.jsx";
 
 const Sale = () => {
-    const [data, setData] = useState('')
-
     const [concern, setConcern] = useState('')
     const [brand, setBrand] = useState('')
     const [model, setModel] = useState('')
@@ -13,94 +11,18 @@ const Sale = () => {
     const [price, setPrice] = useState('')
     const [description, setDescription] = useState('')
 
-    const [concernsArr, setConcernsArr] = useState([]);
-    const [brandsArr, setBrandsArr] = useState([]);
-    const [modelsArr, setModelArr] = useState([]);
-    const [enginesArr, setEnginesArr] = useState([]);
-
-    const fetchData = () => {
-        fetch('https://dumpdot.ru/car/allCars', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-            },
-        }).then((response) => {
-            return response.json();
-        }).then((data) => {
-            setData(data.response)
-        });
-    }
-
-    useEffect(() => {
-        fetchData();
-    }, [])
-
-
-    useEffect(() => {
-        if (data) {
-            const concerns = new Set();
-            data.forEach(v => concerns.add(v.concern.name));
-            setConcernsArr(Array.from(concerns));
-            if (concerns.size === 1) {
-                setConcern(concernsArr[0])
-            }
-        }
-    }, [data])
-
-    useEffect(() => {
-        if (data && concern) {
-            const brands = new Set();
-            data.forEach(v => {
-                if (v.concern.name === concern) {
-                    brands.add(v.brand.name)
-                }
-            })
-            setBrandsArr(Array.from(brands));
-        }
-    }, [data, concern])
-
-    useEffect(() => {
-        if (data && concern && brand) {
-            const models = new Set();
-            data.forEach(e => {
-                if (e.concern.name === concern && e.brand.name === brand) {
-                    models.add(e.model.name)
-                }
-            })
-            setModelArr(Array.from(models));
-        }
-    }, [data, brand])
-
-
-    useEffect(() => {
-        if (data && concern && brand && model) {
-            const engines = new Set();
-            data.forEach(e => {
-                if (e.concern?.name === concern && e.brand?.name === brand && e.model?.name === model) {
-                    engines.add(e.engine.name)
-                }
-            })
-            setEnginesArr(Array.from(engines));
-        }
-    }, [data, model])
-
-
     const handleConcern = (concern) => {
-        setConcern(concern)
-        setBrand(null)
-        setModel(null)
-        setEngine(null)
+        setConcern("concern")
     }
 
     const handleBrand = (e) => {
-        setBrand(e)
+        setBrand(e.target.value)
         setModel(null)
         setEngine(null)
     }
 
     const handleModel = (e) => {
-        setModel(e)
+        setModel("model")
     }
     const handleEngine = (e) => {
         setEngine(e)
@@ -156,10 +78,11 @@ const Sale = () => {
         <div className={"sale"}>
             <h3>Ты находишься на страничке создания объявления</h3>
             <h3>Ты выбрал следующие данные: {concern} {brand} {model} {engine}</h3>
-            <Select label={"Выбери концерн:"} values={concernsArr} onChange={handleConcern}/>
-            <Select label={"Укажи бренд:"} values={brandsArr} onChange={handleBrand}/>
-            <Select label={"Выбери модель:"} values={modelsArr} onChange={handleModel}/>
-            <Select label={"Уточни данные:"} values={enginesArr} onChange={handleEngine}/>
+            <Car>handleConcern = {handleConcern}
+                handleBrand= {handleBrand}
+                handleModel = {handleModel}
+                handleEngine = {handleEngine}</Car>
+
             <h3>Укажи цену:</h3>
             <input
                 className={'input'}
@@ -181,3 +104,4 @@ const Sale = () => {
 };
 
 export default Sale;
+//TODO обрабатывать колбеки
