@@ -120,6 +120,7 @@ const Sale = () => {
             concern,
             brand,
             model,
+            engine,
             price,
             description,
             action: "SALE"
@@ -139,6 +140,7 @@ const Sale = () => {
             text: "Продать"
         })
     }, [])
+
 
 //Валидация кнопки
     useEffect(() => {

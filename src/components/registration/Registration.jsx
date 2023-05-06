@@ -4,44 +4,46 @@ import Select from "../select/select.jsx";
 import {useTelegram} from "../../hooks/useTelegram.js";
 
 const Registration = () => {
-    const [data, setData] = useState('')
-
+    const [carData, setCarData] = useState('')
+    const [citiesData, setCitiesData] = useState('')
     const [concern, setConcern] = useState('')
     const [brand, setBrand] = useState('')
     const [model, setModel] = useState('')
     const [engine, setEngine] = useState('')
+    const [country, setCountry] = useState('')
+    const [city, setCity] = useState('')
 
     const [concernsArr, setConcernsArr] = useState([]);
     const [brandsArr, setBrandsArr] = useState([]);
     const [modelsArr, setModelArr] = useState([]);
     const [enginesArr, setEnginesArr] = useState([]);
     const [countriesArr, setCountriesArr] = useState([]);
-
+    const [citiesArr, setCitiesArr] = useState([]);
     const fetchData = () => {
         fetch('https://85.193.82.129/car/allCars', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
-                'Origin': 'http://localhost:3000',
             },
         }).then((response) => {
             return response.json();
         }).then((data) => {
-            setData(data.response)
+            setCarData(data.response)
         });
-        fetch('http://localhost:8080/place/countries', {
+
+        fetch('https://85.193.82.129/place/cities', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
-                'Origin': 'http://localhost:3000',
             },
         }).then((response) => {
             return response.json();
         }).then((data) => {
-            setCountriesArr(data.response)
+            setCitiesData(data.response)
         });
+
     }
 
     useEffect(() => {
@@ -50,52 +52,81 @@ const Registration = () => {
 
 
     useEffect(() => {
-        if (data) {
+        if (carData) {
             const concerns = new Set();
-            data.forEach(v => concerns.add(v.concern.name));
+            carData.forEach(v => concerns.add(v.concern.name));
             setConcernsArr(Array.from(concerns));
             if (!concern) {
                 setConcern(concernsArr[0])
             }
         }
-    }, [data])
+    }, [carData])
 
     useEffect(() => {
-        if (data && concern) {
+        if (carData && concern) {
             const brands = new Set();
-            data.forEach(v => {
+            carData.forEach(v => {
                 if (v.concern.name === concern) {
                     brands.add(v.brand.name)
                 }
             })
             setBrandsArr(Array.from(brands));
+            if (concernsArr.length === 1) {
+                setBrand(brandsArr[0])
+            }
         }
-    }, [data, concern])
+    }, [concern])
+
 
     useEffect(() => {
-        if (data && concern && brand) {
+        if (carData && concern && brand) {
             const models = new Set();
-            data.forEach(e => {
+            carData.forEach(e => {
                 if (e.concern.name === concern && e.brand.name === brand) {
                     models.add(e.model.name)
                 }
             })
             setModelArr(Array.from(models));
         }
-    }, [data, brand])
+    }, [brand])
 
 
     useEffect(() => {
-        if (data && concern && brand && model) {
+        if (carData && concern && brand && model) {
             const engines = new Set();
-            data.forEach(e => {
+            carData.forEach(e => {
                 if (e.concern?.name === concern && e.brand?.name === brand && e.model?.name === model) {
                     engines.add(e.engine.name)
                 }
             })
             setEnginesArr(Array.from(engines));
         }
-    }, [data, model])
+    }, [model])
+
+    useEffect(() => {
+        const countries = new Set();
+        if (citiesData) {
+            citiesData.forEach(e => {
+                    countries.add(e.countryCode);
+                }
+            );
+            setCountriesArr(Array.from(countries));
+        }
+    }, [engine]);
+
+    useEffect(() => {
+        const cities = new Set();
+        if (citiesData) {
+            citiesData.forEach(e => {
+                if (e.countryCode === country) {
+                    cities.add(e.name);
+                }
+
+            });
+        }
+
+        setCitiesArr(Array.from(cities));
+    }, [country]);
 
 
     const handleConcern = (concern) => {
@@ -117,7 +148,13 @@ const Registration = () => {
     const handleEngine = (e) => {
         setEngine(e)
     }
+    const handleCountry = (e) => {
+        setCountry(e)
+    }
 
+    const handleCity = (e) => {
+        setCity(e)
+    }
 
     const {tg} = useTelegram()
 
@@ -152,8 +189,8 @@ const Registration = () => {
             <Select label={"Укажи бренд:"} values={brandsArr} onChange={handleBrand}/>
             <Select label={"Выбери модель:"} values={modelsArr} onChange={handleModel}/>
             <Select label={"Уточни данные:"} values={enginesArr} onChange={handleEngine}/>
-            <Select label={"Выбери страну:"} values={countriesArr} onChange={handleEngine}/>
-            <Select label={"Выбери город:"} values={countriesArr} onChange={handleEngine}/>
+            <Select label={"Выбери страну:"} values={countriesArr} onChange={handleCountry}/>
+            <Select label={"Выбери город:"} values={citiesArr} onChange={handleCity}/>
         </div>
     );
 };
