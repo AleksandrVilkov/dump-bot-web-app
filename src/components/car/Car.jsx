@@ -22,7 +22,7 @@ const Car = (props) => {
         fetchData();
     }, []);
     const fetchData = () => {
-        fetch('https://dumpdot.ru/car/allCars', {
+        fetch('https://dumpdot.ru/api/car/allCars', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

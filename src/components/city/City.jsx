@@ -11,7 +11,7 @@ const City = (props) => {
     const [citiesArr, setCitiesArr] = useState([]);
 
     const fetchData = () => {
-        fetch('https://dumpdot.ru/place/cities', {
+        fetch('https://dumpdot.ru/api/place/cities', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
