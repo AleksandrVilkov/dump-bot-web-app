@@ -11,7 +11,7 @@ const Car = (props) => {
     const [engine, setEngine] = useState('')
 
     //Массивы для выбора
-    const [concernsArr, setConcernsArr] = useState([]);
+    const [concernsArr, setConcernsArr] = useState([""]);
     const [brandsArr, setBrandsArr] = useState([]);
     const [modelsArr, setModelArr] = useState([]);
     const [enginesArr, setEnginesArr] = useState([]);
@@ -39,11 +39,9 @@ const Car = (props) => {
     useEffect(() => {
         if (data) {
             const concerns = new Set();
+            concerns.add("");
             data.forEach(v => concerns.add(v.concern.name));
             setConcernsArr(Array.from(concerns));
-            if (concerns.size === 1) {
-                setConcern(concernsArr[0])
-            }
         }
     }, [data])
 
@@ -51,6 +49,7 @@ const Car = (props) => {
     useEffect(() => {
         if (data && concern) {
             const brands = new Set();
+            brands.add("");
             data.forEach(v => {
                 if (v.concern.name === concern) {
                     brands.add(v.brand.name)
@@ -58,12 +57,13 @@ const Car = (props) => {
             })
             setBrandsArr(Array.from(brands));
         }
-    }, [data, concern])
+    }, [concern])
 
     //действия, когда изменился бренд
     useEffect(() => {
         if (data && concern && brand) {
             const models = new Set();
+            models.add("");
             data.forEach(e => {
                 if (e.concern.name === concern && e.brand.name === brand) {
                     models.add(e.model.name)
@@ -71,12 +71,13 @@ const Car = (props) => {
             })
             setModelArr(Array.from(models));
         }
-    }, [data, brand])
+    }, [brand])
 
     //действия, когда изменилась модель
     useEffect(() => {
         if (data && concern && brand && model) {
             const engines = new Set();
+            engines.add("");
             data.forEach(e => {
                 if (e.concern?.name === concern && e.brand?.name === brand && e.model?.name === model) {
                     engines.add(e.engine.name)
@@ -84,29 +85,29 @@ const Car = (props) => {
             })
             setEnginesArr(Array.from(engines));
         }
-    }, [data, model])
+    }, [model])
 
 
     /***
      * Обрабочкики выбора данных
      */
     const handleConcern = (concern) => {
-      //  props.handleConcern(e);
         setConcern(concern)
-        setBrand(null)
-        setModel(null)
-        setEngine(null)
+        props.handleConcern(concern)
     }
 
     const handleBrand = (e) => {
-      //  props.onChange(e);
+        setBrand(e)
+        props.handleBrand(e)
     }
 
     const handleModel = (e) => {
-   //     props.handleModel(e);
+        setModel(e)
+        props.handleModel(e)
     }
     const handleEngine = (e) => {
-  //      props.handleEngine(e);
+        setEngine(e)
+        props.handleEngine(e)
     }
     return (
         <div className={"car"}>
@@ -121,5 +122,3 @@ const Car = (props) => {
 Car.propTypes = {};
 
 export default Car;
-
-//TODO сделать колбеки

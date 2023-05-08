@@ -13,22 +13,26 @@ const Sale = () => {
     const [description, setDescription] = useState('')
 
     const handleConcern = (concern) => {
-        setConcern("concern")
+        setConcern(concern);
     }
 
     const handleBrand = (e) => {
-        setBrand(e.target.value)
-        setModel(null)
-        setEngine(null)
+        setBrand(e)
     }
 
     const handleModel = (e) => {
-        setModel("model")
+        setModel(e)
     }
     const handleEngine = (e) => {
         setEngine(e)
     }
 
+    const handlePrice = (e) => {
+        setPrice(e)
+    }
+    const handleDescription = (e) => {
+        setDescription(e)
+    }
 
     const {tg} = useTelegram()
 
@@ -71,17 +75,14 @@ const Sale = () => {
 
     return (
         <div className={"sale"}>
-            <h3>Ты находишься на страничке создания объявления</h3>
-            <h3>Ты выбрал следующие данные: {concern} {brand} {model} {engine}</h3>
-            <Car>handleConcern = {handleConcern}
-                handleBrand= {handleBrand}
-                handleModel = {handleModel}
-                handleEngine = {handleEngine}</Car>
-            <Description></Description>
-
+            <h3>Заявка на продажу заппчасти:</h3>
+            <Car handleConcern={handleConcern}
+                 handleBrand={handleBrand}
+                 handleModel={handleModel}
+                 handleEngine={handleEngine}/>
+            <Description handlePrice={handlePrice} handleDescription={handleDescription}/>
         </div>
     );
 };
 
 export default Sale;
-//TODO обрабатывать колбеки

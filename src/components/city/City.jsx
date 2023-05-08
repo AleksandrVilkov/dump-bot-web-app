@@ -27,8 +27,39 @@ const City = (props) => {
         fetchData();
     }, [])
 
-    let handleCountry;
-    let handleCity;
+    useEffect(() => {
+        const countries = new Set();
+        countries.add("");
+        if (citiesData) {
+            citiesData.forEach(v => {
+                countries.add(v.countryCode)
+            })
+        }
+        setCountriesArr(Array.from(countries));
+    }, [citiesData])
+
+    useEffect(() => {
+        const cities = new Set();
+        cities.add("");
+        if (citiesData) {
+            citiesData.forEach(v => {
+                if (country === v?.countryCode) {
+                    cities.add(v.name)
+                }
+            })
+        }
+        setCitiesArr(Array.from(cities));
+    }, [country])
+
+    const handleCountry = (e) => {
+        setCountry(e)
+        props.handleCountry(e)
+    }
+
+    const handleCity = (e) => {
+        setCity(e)
+        props.handleCity(e)
+    }
     return (
         <div>
             <Select label={"Выбери страну:"} values={countriesArr} onChange={handleCountry}/>

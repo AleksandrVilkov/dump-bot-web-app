@@ -1,30 +1,40 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import './Search.css';
 import {useTelegram} from "../../hooks/useTelegram.js";
+import Car from "../car/Car.jsx";
+import Description from "../description/Description.jsx";
 
 const Search = () => {
-    const {tg} = useTelegram()
     const [concern, setConcern] = useState('')
     const [brand, setBrand] = useState('')
     const [model, setModel] = useState('')
     const [engine, setEngine] = useState('')
+    const [price, setPrice] = useState('')
     const [description, setDescription] = useState('')
 
-    const onChangeConcern = (e) => {
-        setConcern(e.target.value)
+    const handleConcern = (concern) => {
+        setConcern(concern);
     }
-    const onChangeBrand = (e) => {
-        setBrand(e.target.value)
+
+    const handleBrand = (e) => {
+        setBrand(e)
     }
-    const onChangeModel = (e) => {
-        setModel(e.target.value)
+
+    const handleModel = (e) => {
+        setModel(e)
     }
-    const onChangeEngine = (e) => {
-        setEngine(e.target.value)
+    const handleEngine = (e) => {
+        setEngine(e)
     }
-    const onChangeDescription = (e) => {
-        setDescription(e.target.value)
+
+    const handlePrice = (e) => {
+        setPrice(e)
     }
+    const handleDescription = (e) => {
+        setDescription(e)
+    }
+
+    const {tg} = useTelegram()
 
     const onSendData = useCallback(() => {
         const data = {
@@ -32,11 +42,12 @@ const Search = () => {
             brand,
             model,
             engine,
+            price,
             description,
             action: "SEARCH"
         }
         tg.sendData(JSON.stringify(data));
-    }, [concern, brand, model, engine, description])
+    }, [concern, brand, model, engine, price, description])
 
     useEffect(() => {
         tg.onEvent("mainButtonClicked", onSendData)
@@ -47,29 +58,29 @@ const Search = () => {
 
     useEffect(() => {
         tg.MainButton.setParams({
-            text: "Отправить"
+            text: "Продать"
         })
-    })
+    }, [])
 
-    //Валидация кнопки
+
+//Валидация кнопки
     useEffect(() => {
-        if (!description) {
+        if (!price || !description) {
             tg.MainButton.hide();
         } else {
             tg.MainButton.show();
         }
 
-    }, [description])
+    }, [price, description])
 
     return (
-        <div className={"registration"}>
-            <h3>Ты находишься на страничке создания запроса на поиск деталей</h3>
-            <input className={'input'} type={"text"} onChange={onChangeConcern} placeholder={"Укажи концерн:"}/>
-            <input className={'input'} type={"text"} onChange={onChangeBrand} placeholder={"Укажи выбери бренд:"}/>
-            <input className={'input'} type={"text"} onChange={onChangeModel} placeholder={"Укажи выбери модель:"}/>
-            <input className={'input'} type={"text"} onChange={onChangeEngine} placeholder={"Выбери мотор:"}/>
-            <input className={'input'} type={"text"} onChange={onChangeDescription}
-                   placeholder={"Напиши что именно ты ищешь:"}/>
+        <div className={"search"}>
+            <h3>Заявка поиск запчасти:</h3>
+            <Car handleConcern={handleConcern}
+                 handleBrand={handleBrand}
+                 handleModel={handleModel}
+                 handleEngine={handleEngine}/>
+            <Description handlePrice={handlePrice} handleDescription={handleDescription}/>
         </div>
     );
 };

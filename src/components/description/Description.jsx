@@ -6,15 +6,16 @@ const Description = (props) => {
 
     const handlePrice = (e) => {
         setPrice(e.target.value)
+        props.handlePrice(e.target.value)
     }
     const handleDescription = (e) => {
         setDescription(e.target.value)
+        props.handleDescription(e.target.value)
     }
 
 
     return (
         <div>
-            <h3>Укажи цену:</h3>
             <input
                 className={'input'}
                 type={"text"}
