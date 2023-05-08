@@ -5,27 +5,9 @@ import Car from "../car/Car.jsx";
 import Description from "../description/Description.jsx";
 
 const Sale = () => {
-    const [concern, setConcern] = useState('')
-    const [brand, setBrand] = useState('')
-    const [model, setModel] = useState('')
-    const [engine, setEngine] = useState('')
+    const [carId, setCarId] = useState('')
     const [price, setPrice] = useState('')
     const [description, setDescription] = useState('')
-
-    const handleConcern = (concern) => {
-        setConcern(concern);
-    }
-
-    const handleBrand = (e) => {
-        setBrand(e)
-    }
-
-    const handleModel = (e) => {
-        setModel(e)
-    }
-    const handleEngine = (e) => {
-        setEngine(e)
-    }
 
     const handlePrice = (e) => {
         setPrice(e)
@@ -38,16 +20,13 @@ const Sale = () => {
 
     const onSendData = useCallback(() => {
         const data = {
-            concern,
-            brand,
-            model,
-            engine,
+            carId,
             price,
             description,
             action: "SALE"
         }
         tg.sendData(JSON.stringify(data));
-    }, [concern, brand, model, engine, price, description])
+    }, [carId, price, description])
 
     useEffect(() => {
         tg.onEvent("mainButtonClicked", onSendData)
@@ -62,24 +41,23 @@ const Sale = () => {
         })
     }, [])
 
-
-//Валидация кнопки
+    const handleCarId = (e) => {
+        setCarId(e)
+    }
+    //Валидация кнопки
     useEffect(() => {
-        if (!price || !description) {
+        if (!price || !description || !carId) {
             tg.MainButton.hide();
         } else {
             tg.MainButton.show();
         }
 
-    }, [price, description])
+    }, [carId, price, description])
 
     return (
         <div className={"sale"}>
             <h3>Заявка на продажу заппчасти:</h3>
-            <Car handleConcern={handleConcern}
-                 handleBrand={handleBrand}
-                 handleModel={handleModel}
-                 handleEngine={handleEngine}/>
+            <Car handleCarId={handleCarId}/>
             <Description handlePrice={handlePrice} handleDescription={handleDescription}/>
         </div>
     );
