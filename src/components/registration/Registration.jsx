@@ -40,6 +40,14 @@ const Registration = () => {
         })
     }, [])
 
+    useEffect(() => {
+        if (!concern || !brand || !model || !engine || !country || !city) {
+            tg.MainButton.hide();
+        } else {
+            tg.MainButton.show();
+        }
+
+    }, [concern, brand, model, engine, country, city])
     const handleConcern = (concern) => {
         setConcern(concern);
     }
