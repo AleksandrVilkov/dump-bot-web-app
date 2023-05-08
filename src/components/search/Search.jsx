@@ -5,28 +5,14 @@ import Car from "../car/Car.jsx";
 import Description from "../description/Description.jsx";
 
 const Search = () => {
-    const [concern, setConcern] = useState('')
-    const [brand, setBrand] = useState('')
-    const [model, setModel] = useState('')
-    const [engine, setEngine] = useState('')
+    const [carId, setCarId] = useState('')
     const [price, setPrice] = useState('')
     const [description, setDescription] = useState('')
 
-    const handleConcern = (concern) => {
-        setConcern(concern);
-    }
 
-    const handleBrand = (e) => {
-        setBrand(e)
+    const handleCarId = (e) => {
+        setCarId(e)
     }
-
-    const handleModel = (e) => {
-        setModel(e)
-    }
-    const handleEngine = (e) => {
-        setEngine(e)
-    }
-
     const handlePrice = (e) => {
         setPrice(e)
     }
@@ -38,16 +24,13 @@ const Search = () => {
 
     const onSendData = useCallback(() => {
         const data = {
-            concern,
-            brand,
-            model,
-            engine,
+            carId,
             price,
             description,
             action: "SEARCH"
         }
         tg.sendData(JSON.stringify(data));
-    }, [concern, brand, model, engine, price, description])
+    }, [carId, price, description])
 
     useEffect(() => {
         tg.onEvent("mainButtonClicked", onSendData)
@@ -76,10 +59,8 @@ const Search = () => {
     return (
         <div className={"search"}>
             <h3>Заявка поиск запчасти:</h3>
-            <Car handleConcern={handleConcern}
-                 handleBrand={handleBrand}
-                 handleModel={handleModel}
-                 handleEngine={handleEngine}/>
+            <Car handleCarId={handleCarId}/>
+            <h3>Если есть предел по цене, укажи, если нет - оставь поле пустым:</h3>
             <Description handlePrice={handlePrice} handleDescription={handleDescription}/>
         </div>
     );

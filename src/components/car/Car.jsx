@@ -121,7 +121,7 @@ const Car = (props) => {
             <Select label={"Выбери концерн:"} values={concernsArr} onChange={handleConcern}/>
             <Select label={"Укажи бренд:"} values={brandsArr} onChange={handleBrand}/>
             <Select label={"Выбери модель:"} values={modelsArr} onChange={handleModel}/>
-            <Select label={"Какой у тебя двигатель:"} values={enginesArr} onChange={handleEngine}/>
+            <Select label={"Выбери двигатель:"} values={enginesArr} onChange={handleEngine}/>
         </div>
     );
 };
