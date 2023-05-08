@@ -48,13 +48,13 @@ const Search = () => {
 
 //Валидация кнопки
     useEffect(() => {
-        if (!price || !description) {
+        if (!description) {
             tg.MainButton.hide();
         } else {
             tg.MainButton.show();
         }
 
-    }, [price, description])
+    }, [description])
 
     return (
         <div className={"search"}>
