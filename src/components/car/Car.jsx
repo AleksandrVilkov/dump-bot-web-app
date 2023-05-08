@@ -9,7 +9,6 @@ const Car = (props) => {
     const [brand, setBrand] = useState('')
     const [model, setModel] = useState('')
     const [engine, setEngine] = useState('')
-    const [car, setCar] = useState('')
 
     //Массивы для выбора
     const [concernsArr, setConcernsArr] = useState([""]);
@@ -93,8 +92,7 @@ const Car = (props) => {
         if (data) {
             data.forEach(v => {
                 if (v.brand.name === brand && v.model.name === model && v.engine.name === engine) {
-                    setCar(JSON.stringify(v))
-                    props.handleCar(JSON.stringify(v))
+                    props.handleCarId(JSON.stringify(v.id))
                 }
             })
 

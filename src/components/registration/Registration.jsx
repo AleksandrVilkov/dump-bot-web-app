@@ -5,20 +5,20 @@ import Car from "../car/Car.jsx";
 import City from "../city/City.jsx";
 
 const Registration = () => {
-    const [city, setCity] = useState('')
-    const [car, setCar] = useState('')
+    const [cityId, setCityId] = useState('')
+    const [carId, setCarId] = useState('')
 
     const {tg} = useTelegram()
 
     const onSendData = useCallback(() => {
 
         const data = {
-            city,
-            car,
+            cityId,
+            carId,
             action: "REGISTRATION"
         }
         tg.sendData(JSON.stringify(data));
-    }, [car, city])
+    }, [carId, cityId])
 
     useEffect(() => {
         tg.onEvent("mainButtonClicked", onSendData)
@@ -34,27 +34,27 @@ const Registration = () => {
     }, [])
 
     useEffect(() => {
-        if (!car || !city) {
+        if (!cityId || !carId) {
             tg.MainButton.hide();
         } else {
             tg.MainButton.show();
         }
 
-    }, [car, city])
+    }, [carId, cityId])
 
-    const handleCity = (e) => {
-        setCity(e)
+    const handleCityId = (e) => {
+        setCityId(e)
     }
-    const handleCar = (e) => {
-        setCar(e)
+    const handleCarId = (e) => {
+        setCarId(e)
     }
 
     return (
         <div className={"registration"}>
             <h3>Добро пожаловать! Давай пройдем простую
-                регистрацию:</h3>
-            <Car handleCar={handleCar}/>
-            <City handleCity={handleCity}/>
+                регистрацию: {cityId} {carId}</h3>
+            <Car handleCarId={handleCarId}/>
+            <City handleCityId={handleCityId}/>
         </div>
     );
 };

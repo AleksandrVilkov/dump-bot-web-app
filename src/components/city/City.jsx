@@ -5,7 +5,6 @@ const City = (props) => {
 
     const [citiesData, setCitiesData] = useState('')
     const [country, setCountry] = useState('')
-    const [name, setName] = useState('')
     const [city, setCity] = useState('')
 
     const [countriesArr, setCountriesArr] = useState([]);
@@ -56,8 +55,7 @@ const City = (props) => {
         if (citiesData) {
             citiesData.forEach(v => {
                 if (v.countryCode === country && v.name === city) {
-                    setCity(JSON.stringify(v))
-                    props.handleCity(JSON.stringify(v))
+                    props.handleCityId(v.id)
                 }
             })
         }
