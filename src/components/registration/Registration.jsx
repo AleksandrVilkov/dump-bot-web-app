@@ -18,7 +18,7 @@ const Registration = () => {
             action: "REGISTRATION"
         }
         tg.sendData(JSON.stringify(data));
-    }, [car])
+    }, [car, city])
 
     useEffect(() => {
         tg.onEvent("mainButtonClicked", onSendData)
@@ -52,7 +52,7 @@ const Registration = () => {
     return (
         <div className={"registration"}>
             <h3>Добро пожаловать! Давай пройдем простую
-                регистрацию: {car}</h3>
+                регистрацию:</h3>
             <Car handleCar={handleCar}/>
             <City handleCity={handleCity}/>
         </div>
