@@ -9,6 +9,7 @@ const Car = (props) => {
     const [brand, setBrand] = useState('')
     const [model, setModel] = useState('')
     const [engine, setEngine] = useState('')
+    const [car, setCar] = useState('')
 
     //Массивы для выбора
     const [concernsArr, setConcernsArr] = useState([""]);
@@ -88,26 +89,34 @@ const Car = (props) => {
     }, [model])
 
 
+    useEffect(() => {
+        if (data) {
+            data.forEach(v => {
+                if (v.brand.name === brand && v.model.name === model && v.engine.name === engine) {
+                    setCar(JSON.stringify(v))
+                    props.handleCar(JSON.stringify(v))
+                }
+            })
+
+        }
+
+    })
     /***
      * Обрабочкики выбора данных
      */
     const handleConcern = (concern) => {
         setConcern(concern)
-        props.handleConcern(concern)
     }
 
     const handleBrand = (e) => {
         setBrand(e)
-        props.handleBrand(e)
     }
 
     const handleModel = (e) => {
         setModel(e)
-        props.handleModel(e)
     }
     const handleEngine = (e) => {
         setEngine(e)
-        props.handleEngine(e)
     }
     return (
         <div className={"car"}>
@@ -118,7 +127,5 @@ const Car = (props) => {
         </div>
     );
 };
-
-Car.propTypes = {};
 
 export default Car;

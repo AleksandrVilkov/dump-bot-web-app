@@ -5,6 +5,7 @@ const City = (props) => {
 
     const [citiesData, setCitiesData] = useState('')
     const [country, setCountry] = useState('')
+    const [name, setName] = useState('')
     const [city, setCity] = useState('')
 
     const [countriesArr, setCountriesArr] = useState([]);
@@ -51,14 +52,23 @@ const City = (props) => {
         setCitiesArr(Array.from(cities));
     }, [country])
 
+    useEffect(() => {
+        if (citiesData) {
+            citiesData.forEach(v => {
+                if (v.countryCode === country && v.name === city) {
+                    setCity(JSON.stringify(v))
+                    props.handleCity(JSON.stringify(v))
+                }
+            })
+        }
+    })
+
     const handleCountry = (e) => {
         setCountry(e)
-        props.handleCountry(e)
     }
 
     const handleCity = (e) => {
         setCity(e)
-        props.handleCity(e)
     }
     return (
         <div>
