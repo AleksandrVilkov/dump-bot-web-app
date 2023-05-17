@@ -41,7 +41,7 @@ const Search = () => {
 
     useEffect(() => {
         tg.MainButton.setParams({
-            text: "Продать"
+            text: "Отправить"
         })
     }, [])
 
@@ -59,9 +59,9 @@ const Search = () => {
     return (
         <div className={"search"}>
             <h3>Заявка поиск запчасти:</h3>
-            <Car handleCarId={handleCarId}/>
             <h3>Если есть предел по цене, укажи, если нет - оставь поле пустым:</h3>
             <Description handlePrice={handlePrice} handleDescription={handleDescription}/>
+            <Car handleCarId={handleCarId}/>
         </div>
     );
 };
