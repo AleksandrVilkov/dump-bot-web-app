@@ -51,7 +51,6 @@ const Sale = () => {
         } else {
             tg.MainButton.show();
         }
-        console.log(cars)
 
     }, [cars, price, description])
 
@@ -59,7 +58,7 @@ const Sale = () => {
         <div className={"sale"}>
             <h3>Заявка на продажу заппчасти:</h3>
             <Car handleCars={handleCars}/>
-            <Description handlePrice={handlePrice} handleDescription={handleDescription}/>
+            <Description needPrice={true} handlePrice={handlePrice} handleDescription={handleDescription}/>
         </div>
     );
 };

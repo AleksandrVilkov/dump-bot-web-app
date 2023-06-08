@@ -124,7 +124,6 @@ const Car = (props) => {
         setBrandIsListed(true)
         setModelIsListed(true)
 
-
         //Очищаем списки
         setEnginesArr([])
 

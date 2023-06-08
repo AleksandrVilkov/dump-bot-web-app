@@ -8,13 +8,15 @@ import './select.css'
 * props.label
 * */
 const Select = (props) => {
-    const [value, setValue] = useState();
+    const [value, setValue] = useState(props.label);
     const [values, setValues] = useState([]);
-    const options = values?.map((text, index) => {
-        return <option key={text} value={text}>{text}</option>;
+    const options = [];
+    options.push(<option key={0} value={props.label} disabled>{props.label}</option>);
+    values?.forEach((text, index) => {
+        options.push(<option key={text} defaultValue={text}>{text}</option>);
     });
 
-    options.push(<option selected disabled>{props.label}</option>);
+
     useEffect(() => {
         setValues(props.values)
     },[props])
