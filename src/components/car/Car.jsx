@@ -158,7 +158,7 @@ const Car = (props) => {
 
     useEffect(() => {
         if (result) {
-            props.handleCars(JSON.stringify(result))
+            props.handleCars(result)
         }
     }, [result])
 
