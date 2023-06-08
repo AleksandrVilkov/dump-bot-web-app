@@ -19,6 +19,7 @@ const Car = (props) => {
 
     const [result, setResult] = useState('')
 
+
     //Массивы для выбора
     const [concernsArr, setConcernsArr] = useState([]);
     const [brandsArr, setBrandsArr] = useState([]);
@@ -184,8 +185,6 @@ const Car = (props) => {
                 <h2>Загружаем данные..</h2>
             ) : (
                 <>
-                    <h2>Укажи машины к которым подходит деталь:</h2>
-                    <h4>На текущий момент выбрано подходящих автомобилей: {result.length}</h4>
                     <h5>Совсем скоро можно будет выбирать несколько моделей и брендов, потерпи чуть чуть...</h5>
                     <Select label={"Выбери концерн:"} values={concernsArr} onChange={handleConcern}/>
                     {

@@ -5,13 +5,13 @@ import Car from "../car/Car.jsx";
 import Description from "../description/Description.jsx";
 
 const Search = () => {
-    const [carId, setCarId] = useState('')
+    const [cars, setCars] = useState('')
     const [price, setPrice] = useState('')
     const [description, setDescription] = useState('')
 
 
-    const handleCarId = (e) => {
-        setCarId(e)
+    const handleCars = (e) => {
+        setCars(e)
     }
     const handlePrice = (e) => {
         setPrice(e)
@@ -24,13 +24,13 @@ const Search = () => {
 
     const onSendData = useCallback(() => {
         const data = {
-            carId,
+            cars,
             price,
             description,
             action: "SEARCH"
         }
         tg.sendData(JSON.stringify(data));
-    }, [carId, price, description])
+    }, [cars, price, description])
 
     useEffect(() => {
         tg.onEvent("mainButtonClicked", onSendData)
@@ -59,12 +59,9 @@ const Search = () => {
     return (
         <div className={"search"}>
             <h3>Заявка поиск запчасти:</h3>
-            <h4>Если есть предел по цене, укажи, если нет - оставь поле пустым:</h4>
-            <Description handlePrice={handlePrice} handleDescription={handleDescription}/>
+            <Description needPrice={false} handlePrice={handlePrice} handleDescription={handleDescription}/>
             <h4>Можешь заполнить конкретный автомобиль, на который нужна деталь.</h4>
-            <h4>Если заполняешь - нужно выбрать все поля.</h4>
-            <h4>Иначе будет считаться что ничего не заполнено</h4>
-            <Car handleCarId={handleCarId}/>
+            <Car handleCars={handleCars}/>
         </div>
     );
 };

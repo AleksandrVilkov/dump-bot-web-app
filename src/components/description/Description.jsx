@@ -27,15 +27,17 @@ const Description = (props) => {
 
     return (
         <div>
-            {props.needPrice ? (<>   <input
+            {props.needPrice ? (<> <input
                 className={'input'}
                 type={"text"}
                 placeholder={"Укажи цену"}
                 value={price}
                 onChange={handlePrice}
-            /></>) : (<></>)
+            />
+                {validPrice ? (<></>) : (<>Допустимо указывать только числовые значения!</>)}
+            </>) : (<></>)
             }
-            {validPrice ? (<></>) : (<>Допустимо указывать только числовые значения!</>)}
+
 
             <input
                 className={'input'}
