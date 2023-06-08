@@ -10,11 +10,11 @@ import './select.css'
 const Select = (props) => {
     const [value, setValue] = useState();
     const [values, setValues] = useState([]);
-
     const options = values?.map((text, index) => {
         return <option key={text} value={text}>{text}</option>;
     });
 
+    options.push(<option selected disabled>{props.label}</option>);
     useEffect(() => {
         setValues(props.values)
     },[props])
@@ -24,7 +24,6 @@ const Select = (props) => {
     }
     return (
         <div className={"select"}>
-            <h3>{props.label}</h3>
             <select value={value} onChange={(event) => handleChange(event.target.value)}>
                 {options}
             </select>

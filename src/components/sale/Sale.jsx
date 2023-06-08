@@ -5,7 +5,7 @@ import Car from "../car/Car.jsx";
 import Description from "../description/Description.jsx";
 
 const Sale = () => {
-    const [carId, setCarId] = useState('')
+    const [cars, setCars] = useState('')
     const [price, setPrice] = useState('')
     const [description, setDescription] = useState('')
 
@@ -20,13 +20,13 @@ const Sale = () => {
 
     const onSendData = useCallback(() => {
         const data = {
-            carId,
+            cars,
             price,
             description,
             action: "SALE"
         }
         tg.sendData(JSON.stringify(data));
-    }, [carId, price, description])
+    }, [cars, price, description])
 
     useEffect(() => {
         tg.onEvent("mainButtonClicked", onSendData)
@@ -41,23 +41,24 @@ const Sale = () => {
         })
     }, [])
 
-    const handleCarId = (e) => {
-        setCarId(e)
+    const handleCars = (e) => {
+        setCars(e)
     }
     //Валидация кнопки
     useEffect(() => {
-        if (!price || !description || !carId) {
+        if (!price || !description || !cars) {
             tg.MainButton.hide();
         } else {
             tg.MainButton.show();
         }
+        console.log(cars)
 
-    }, [carId, price, description])
+    }, [cars, price, description])
 
     return (
         <div className={"sale"}>
             <h3>Заявка на продажу заппчасти:</h3>
-            <Car handleCarId={handleCarId}/>
+            <Car handleCars={handleCars}/>
             <Description handlePrice={handlePrice} handleDescription={handleDescription}/>
         </div>
     );
