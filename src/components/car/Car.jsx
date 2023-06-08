@@ -48,6 +48,9 @@ const Car = (props) => {
 
     //действия, когда получили данные от апи
     useEffect(() => {
+        setConcernIsListed(false)
+        setBrandIsListed(false)
+        setModelIsListed(false)
         if (data) {
             const concerns = new Set();
             data.forEach(v => concerns.add(v.concern.name));
@@ -59,6 +62,18 @@ const Car = (props) => {
     //действия, когда изменился концерн
     useEffect(() => {
         if (data && concern) {
+            //Устанавливаем отрисовку
+            setConcernIsListed(true)
+            setBrandIsListed(false)
+            setModelIsListed(false)
+
+
+            //Очищаем списки
+            setBrandsArr([])
+            setModelArr([])
+            setEnginesArr([])
+
+            //Формируем данные
             const brands = new Set();
             const res = new Set();
             data.forEach(v => {
@@ -67,6 +82,7 @@ const Car = (props) => {
                     res.add(v)
                 }
             })
+            //Сетим
             setBrandsArr(Array.from(brands));
             setResult(Array.from(res));
         }
@@ -74,7 +90,20 @@ const Car = (props) => {
 
     //действия, когда изменился бренд
     useEffect(() => {
+        //Устанавливаем отрисовку
+        setConcernIsListed(true)
+        setBrandIsListed(true)
+        setModelIsListed(false)
+
+
+        //Очищаем списки
+        setModelArr([])
+        setEnginesArr([])
+
+
         if (data && concern && brand) {
+            setModelIsListed(false)
+
             const models = new Set();
             const res = new Set();
             data.forEach(e => {
@@ -90,6 +119,16 @@ const Car = (props) => {
 
     //действия, когда изменилась модель
     useEffect(() => {
+        //Устанавливаем отрисовку
+        setConcernIsListed(true)
+        setBrandIsListed(true)
+        setModelIsListed(true)
+
+
+        //Очищаем списки
+        setEnginesArr([])
+
+
         if (data && concern && brand && model) {
             const engines = new Set();
             const res = new Set();
@@ -128,17 +167,14 @@ const Car = (props) => {
      */
     const handleConcern = (concern) => {
         setConcern(concern)
-        setConcernIsListed(true)
     }
 
     const handleBrand = (e) => {
         setBrand(e)
-        setBrandIsListed(true)
     }
 
     const handleModel = (e) => {
         setModel(e)
-        setModelIsListed(true)
     }
     const handleEngine = (e) => {
         setEngine(e)
@@ -149,6 +185,9 @@ const Car = (props) => {
                 <h2>Загружаем данные..</h2>
             ) : (
                 <>
+                    <h2>Укажи машины к которым подходит деталь:</h2>
+                    <h4>На текущий момент выбрано подходящих автомобилей: {result.length}</h4>
+                    <h5>Совсем скоро можно будет выбирать несколько моделей и брендов, потерпи чуть чуть...</h5>
                     <Select label={"Выбери концерн:"} values={concernsArr} onChange={handleConcern}/>
                     {
                         concernIsListed ? (
