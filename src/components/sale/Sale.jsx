@@ -6,9 +6,14 @@ import Description from "../description/Description.jsx";
 
 const Sale = () => {
     const [cars, setCars] = useState('')
+    const [chooseCars, setChooseCars] = useState([])
+    const [carsComponentCount, setCarsComponentCount] = useState(1)
+
     const [price, setPrice] = useState('')
     const [description, setDescription] = useState('')
 
+    const [arrCarComponent, setArrComponent] = useState([])
+    const [printText, setPrintText] = useState("Выбрали")
     const handlePrice = (e) => {
         setPrice(e)
     }
@@ -28,6 +33,7 @@ const Sale = () => {
         tg.sendData(JSON.stringify(data));
     }, [cars, price, description])
 
+
     useEffect(() => {
         tg.onEvent("mainButtonClicked", onSendData)
         return () => {
@@ -35,15 +41,25 @@ const Sale = () => {
         }
     }, [onSendData])
 
+
     useEffect(() => {
         tg.MainButton.setParams({
             text: "Продать"
         })
     }, [])
 
+   //TODO запоминать выбранные авто из всех блоков, сколько бы их ни было
     const handleCars = (e) => {
+        console.log("e length " + e.length)
         setCars(e)
+        console.log("car length " + cars.length)
+        let str = "Выбрано: \n"
+        for (let i = 0; i < cars.length; i++) {
+           str = str + cars[i].brand.name + " " +  cars[i].model.name
+        }
+        setPrintText(str)
     }
+
     //Валидация кнопки
     useEffect(() => {
         if (!price || !description || !cars) {
@@ -54,10 +70,33 @@ const Sale = () => {
 
     }, [cars, price, description])
 
+    //Добавляем блоки с авто
+    useEffect(() => {
+        let arr = []
+        for (let i = 0; i < carsComponentCount; i++) {
+            arr.push(<Car handleCars={handleCars}/>)
+        }
+        setArrComponent(arr)
+    }, [carsComponentCount])
+
+
     return (
         <div className={"sale"}>
             <h3>Заявка на продажу заппчасти:</h3>
-            <Car handleCars={handleCars}/>
+            {arrCarComponent}
+            <button onClick={() => {
+                setCarsComponentCount(carsComponentCount+1)
+            }}>Добавить авто</button>
+            <br/>
+            <button onClick={() => {
+                let count = carsComponentCount -1
+                if (count === 0) {
+                    count = 1
+                }
+                setCarsComponentCount(count)
+            }}>Удалить авто</button>
+            <br/>
+            <h5>{printText}</h5>
             <Description needPrice={true} handlePrice={handlePrice} handleDescription={handleDescription}/>
         </div>
     );

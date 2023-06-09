@@ -185,7 +185,6 @@ const Car = (props) => {
                 <h2>Загружаем данные..</h2>
             ) : (
                 <>
-                    <h5>Совсем скоро можно будет выбирать несколько моделей и брендов, потерпи чуть чуть...</h5>
                     <Select label={"Выбери концерн:"} values={concernsArr} onChange={handleConcern}/>
                     {
                         concernIsListed ? (
